@@ -43,33 +43,28 @@ namespace UWPBluetooth
 
         private void OnClicked(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("点击一下");
+            Debug.WriteLine("普通扫描");
 
-            //var scanner = CrossBleAdapter.Current.Scan().Subscribe(scanResult =>
-            //{
-            //    // do something with it
-            //    // the scanresult contains the device, RSSI, and advertisement packet
-            //    Debug.WriteLine("扫描到设备：" + scanResult.Device.Uuid);
-            //});
-
+            var scanner = CrossBleAdapter.Current.Scan().Subscribe(scanResult =>
+            {
+                // do something with it
+                // the scanresult contains the device, RSSI, and advertisement packet
+                Debug.WriteLine("扫描到设备：" + scanResult.Device.Uuid);
+            });
             //scanner.Dispose(); // to stop scanning
+        }
 
+        private void OnScanClicked2(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("定向扫描");
             CrossBleAdapter.Current.Scan(new ScanConfig
             {
-                ScanType = BleScanType.Background,
+                //ScanType = BleScanType.Background,
                 ServiceUuids = { new Guid("48EB9001-F352-5FA0-9B06-8FCAA22602CF") }
             }).Subscribe(scanResult =>
             {
                 Debug.WriteLine("扫描到设备：" + scanResult.Device.Name);
             });
-
-
-        }
-
-        private void OnScanClicked2(object sender, RoutedEventArgs e)
-        {
-            ;
-            Debug.WriteLine("扫描状态：" + CrossBleAdapter.Current.IsScanning);
         }
     }
 }

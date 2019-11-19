@@ -9,8 +9,8 @@
     Background="#FFDC7A7A" Loaded="OnMainPageLoaded" Width="800" Height="600">
 
     <Grid>
-        <Button Content="扫描" HorizontalAlignment="Left" Height="115" Margin="130,130,0,0" VerticalAlignment="Top" Width="230" Click="OnClicked"/>
-        <Button Content="扫描方式2" HorizontalAlignment="Left" Height="120" Margin="110,355,0,0" VerticalAlignment="Top" Width="225" Click="OnScanClicked2"/>
+        <Button Content="通用扫描" HorizontalAlignment="Left" Height="115" Margin="130,130,0,0" VerticalAlignment="Top" Width="230" Click="OnClicked"/>
+        <Button Content="定向扫描" HorizontalAlignment="Left" Height="120" Margin="110,355,0,0" VerticalAlignment="Top" Width="225" Click="OnScanClicked2"/>
 
     </Grid>
 </Page>
