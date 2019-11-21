@@ -10,10 +10,10 @@
 
     <Grid>
         <Button Content="通用扫描" HorizontalAlignment="Left" Height="55" Margin="41,32,0,0" VerticalAlignment="Top" Width="206" Click="OnClicked"/>
-        <Button Content="定向扫描" HorizontalAlignment="Left" Height="55" Margin="277,32,0,0" VerticalAlignment="Top" Width="204" Click="OnScanClicked2"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="433,171,0,0" VerticalAlignment="Top" Height="55" Width="175" Click="Button_Click"/>
+        <Button Content="定向扫描" HorizontalAlignment="Left" Height="55" Margin="517,32,0,0" VerticalAlignment="Top" Width="175" Click="OnScanClicked2"/>
+        <Button Content="扫描服务" HorizontalAlignment="Left" Margin="517,142,0,0" VerticalAlignment="Top" Height="55" Width="175" Click="Button_ScanService"/>
         <TextBox HorizontalAlignment="Left" x:Name="TXT" Margin="94,142,0,0" Text="" VerticalAlignment="Top" Height="343" Width="306"/>
-        <Button Content="连接" HorizontalAlignment="Left" Margin="536,30,0,0" VerticalAlignment="Top" Height="59" Width="171" Click="Button_Click_1"/>
+        <Button Content="发送震动" HorizontalAlignment="Left" Margin="521,241,0,0" VerticalAlignment="Top" Height="59" Width="171" Click="ButtonTrigerHaptic"/>
 
     </Grid>
 </Page>

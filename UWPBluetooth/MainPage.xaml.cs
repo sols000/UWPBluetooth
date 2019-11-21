@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -70,7 +71,7 @@ namespace UWPBluetooth
                 });
 
                 currdev = scanResult.Device;
-
+                currdev.Connect();
             });
 
         }
@@ -79,34 +80,36 @@ namespace UWPBluetooth
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(Priority, () => { action(); });
 
         }
-       
-
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        
+        IGattCharacteristic FindCharacter;
+        private void Button_ScanService(object sender, RoutedEventArgs e)
         {
-            //currdev.BeginReliableWriteTransaction().Write()
-            IObservable<IGattCharacteristic> array = currdev.GetCharacteristicsForService(new Guid("48EB9002-F352-5FA0-9B06-8FCAA22602CF"));
-            // TXT.Text = array.ToString();
+            currdev.DiscoverServices().Subscribe(mService =>
+            {
+                IGattService findServ = mService;
+                findServ.DiscoverCharacteristics().Subscribe(mCharacter =>
+                {
+                    Debug.WriteLine("FindCharacter OK:"+mCharacter.Uuid);
+                    if (mCharacter.Uuid == (new Guid("48EB9002-F352-5FA0-9B06-8FCAA22602CF")))
+                    {
+                        Debug.WriteLine("找到了 OK:");
+                        FindCharacter = mCharacter;
+                    }
+                }
+                );
 
-            //  currdev.WhenAnyCharacteristicDiscovered().Subscribe(characteristic =>
-            //{
-            //      // read, write, or subscribe to notifications here
-            //      var result = characteristic.Read(); // use result.Data to see response
-            //                                          //await characteristic.Write(bytes);
-
-            //      characteristic.EnableNotifications();
-            //    characteristic.WhenNotificationReceived().Subscribe(result1 =>
-            //    {
-            //          //result.Data to get at response
-            //          TXT.Text = result1.Characteristic.Value.ToString();
-            //    });
-            //});
+                //Debug.WriteLine("mService OK");
+            });
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void ButtonTrigerHaptic(object sender, RoutedEventArgs e)
         {
-            currdev.Connect();
-           
+            byte[] Data = { 0xC0, 0x01,0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x03, 0x72, 0x01, 0x09, 0x7C, 0xC0 };
+            FindCharacter.WriteWithoutResponse(Data).Subscribe(Result=> 
+            {
+                CharacteristicGattResult Res = Result;
+                Debug.WriteLine("Write Result OK");
+            });
         }
     }
 }
